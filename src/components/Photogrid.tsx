@@ -1,47 +1,48 @@
-import React, { useEffect, useState } from "react";
-import { motion } from "framer-motion";
-import { Photo } from "../types";
-import { fetchPhotos } from "../lib/utils";
+import React, { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { usePexelsImages } from "../hooks/usePexelsImages";
 
 interface PhotoGridProps {
   customerId: number;
 }
 
 const PhotoGrid: React.FC<PhotoGridProps> = ({ customerId }) => {
-  const [photos, setPhotos] = useState<Photo[]>([]);
+  const { images, loading, error } = usePexelsImages(customerId);
+  const [key, setKey] = useState(0);
 
   useEffect(() => {
-    const loadPhotos = async () => {
-      const newPhotos = await fetchPhotos();
-      setPhotos(newPhotos);
-    };
+    // Trigger animation when new images are fetched
+    setKey((prevKey) => prevKey + 1);
+  }, [images]);
 
-    loadPhotos();
-    const interval = setInterval(loadPhotos, 10000);
-
-    return () => clearInterval(interval);
-  }, [customerId]);
-
-  if (photos.length === 0) return <div>Loading photos...</div>;
+  if (loading) return <div>Loading images...</div>;
+  if (error) return <div>{error}</div>;
 
   return (
-    <div className="grid grid-cols-3 gap-4">
-      {photos.map((photo) => (
-        <motion.div
-          key={photo.id}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.5 }}
-          className="fade-in"
-        >
-          <img
-            src={photo.url}
-            alt={`Photo ${photo.id}`}
-            className="w-full h-full object-cover rounded-md"
-          />
-        </motion.div>
-      ))}
+    <div className="grid grid-cols-3 gap-4 max-w-4xl mx-auto">
+      <AnimatePresence>
+        {images.map((photo, index) => (
+          <motion.div
+            key={`${key}-${photo.id}`}
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.8 }}
+            transition={{ duration: 0.5, delay: index * 0.1 }}
+            className="relative aspect-square overflow-hidden rounded-lg shadow-md"
+          >
+            <img
+              src={photo.src}
+              alt={`Photo by ${photo.photographer}`}
+              className="w-full h-full object-cover"
+            />
+            <div className="absolute inset-0 bg-black bg-opacity-50 opacity-0 hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+              <p className="text-sm text-white text-center px-2">
+                Image by {photo.photographer}
+              </p>
+            </div>
+          </motion.div>
+        ))}
+      </AnimatePresence>
     </div>
   );
 };

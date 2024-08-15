@@ -23,7 +23,7 @@ const Layout: React.FC = () => {
       <header className="flex justify-between items-center p-4 bg-background shadow-md">
         <div className="flex items-center space-x-4 flex-grow justify-center">
           <img src="/cubeimage.png" alt="CubeAI logo" className="w-auto h-12" />
-          <h1 className="text-3xl font-bold text-center flex-grow">Cube</h1>
+          <h1 className="text-4xl font-bold text-center flex-grow">Cube</h1>
         </div>
         <div className="flex items-center space-x-4">
           <ThemeToggle />

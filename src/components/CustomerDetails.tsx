@@ -8,13 +8,22 @@ interface CustomerDetailsProps {
 
 const CustomerDetails: React.FC<CustomerDetailsProps> = ({ customer }) => {
   return (
-    <div className="max-w-4xl mx-auto px-4 text-center fade-in">
-      <div className="mb-8">
-        <h2 className="text-3xl font-bold">{customer.name} - Details</h2>
-        <p className="text-xl text-muted-foreground">{customer.title}</p>
-        <p className="text-muted-foreground">{customer.address}</p>
-      </div>
+    <div className="text-center">
+      <h2 className="text-3xl font-bold mb-2">{customer.name}</h2>
+      <p className="text-xl text-muted-foreground mb-4">{customer.title}</p>
+      <p className="text-muted-foreground mb-8">{customer.address}</p>
       <PhotoGrid customerId={customer.id} />
+      <p className="mt-4 text-sm text-muted-foreground">
+        Photos provided by{" "}
+        <a
+          href="https://www.pexels.com"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="underline"
+        >
+          Pexels
+        </a>
+      </p>
     </div>
   );
 };
