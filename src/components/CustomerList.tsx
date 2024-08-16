@@ -1,62 +1,73 @@
-import React, { useRef } from "react";
-import { Customer } from "../types";
-import { ScrollArea } from "../components/ui/scroll-area";
-import { useVirtualizer } from "@tanstack/react-virtual";
-import CustomerCard from "./CustomerCard";
+import React from "react";
+import { FixedSizeList as List } from "react-window";
+import AutoSizer from "react-virtualized-auto-sizer";
+
+interface User {
+  name: {
+    first: string;
+    last: string;
+  };
+  email: string;
+  picture: {
+    thumbnail: string;
+  };
+}
 
 interface CustomerListProps {
-  customers: Customer[];
+  users: User[];
   selectedCustomerId: number | null;
   onSelectCustomer: (id: number) => void;
 }
 
+interface RowProps {
+  index: number;
+  style: React.CSSProperties;
+}
+
 const CustomerList: React.FC<CustomerListProps> = ({
-  customers,
+  users,
   selectedCustomerId,
   onSelectCustomer,
 }) => {
-  const parentRef = useRef<HTMLDivElement>(null);
-
-  const rowVirtualizer = useVirtualizer({
-    count: customers.length,
-    getScrollElement: () => parentRef.current,
-    estimateSize: () => 100,
-    overscan: 10,
-  });
+  const Row: React.FC<RowProps> = ({ index, style }) => {
+    const user = users[index];
+    return (
+      <div
+        style={style}
+        className={`flex items-center p-4 cursor-pointer ${
+          selectedCustomerId === index
+            ? "bg-primary text-primary-foreground"
+            : "hover:bg-gray-100"
+        }`}
+        onClick={() => onSelectCustomer(index)}
+      >
+        <img
+          src={user.picture.thumbnail}
+          alt={`${user.name.first} ${user.name.last}`}
+          className="w-10 h-10 rounded-full flex-shrink-0 mr-3"
+          loading="lazy"
+        />
+        <div className="flex-grow min-w-0">
+          <h3 className="font-semibold truncate">{`${user.name.first} ${user.name.last}`}</h3>
+          <p className="text-sm text-muted-foreground truncate">{user.email}</p>
+        </div>
+      </div>
+    );
+  };
 
   return (
-    <ScrollArea className="h-[calc(100vh-5rem)]" ref={parentRef}>
-      <div
-        style={{
-          height: `${rowVirtualizer.getTotalSize()}px`,
-          width: "100%",
-          position: "relative",
-        }}
-      >
-        {rowVirtualizer.getVirtualItems().map((virtualItem) => {
-          const customer = customers[virtualItem.index];
-          return (
-            <div
-              key={customer.id}
-              style={{
-                position: "absolute",
-                top: 0,
-                left: 0,
-                width: "100%",
-                height: `${virtualItem.size}px`,
-                transform: `translateY(${virtualItem.start}px)`,
-              }}
-            >
-              <CustomerCard
-                customer={customer}
-                isSelected={customer.id === selectedCustomerId}
-                onSelect={onSelectCustomer}
-              />
-            </div>
-          );
-        })}
-      </div>
-    </ScrollArea>
+    <AutoSizer>
+      {({ height, width }: { height: number; width: number }) => (
+        <List
+          height={height}
+          itemCount={users.length}
+          itemSize={72}
+          width={width}
+        >
+          {Row}
+        </List>
+      )}
+    </AutoSizer>
   );
 };
 

@@ -32,7 +32,7 @@ const PhotoGrid: React.FC<PhotoGridProps> = ({ customerId }) => {
   if (error) return <div>Error loading images</div>;
 
   return (
-    <div className="grid grid-cols-3 gap-4 max-w-4xl mx-auto overflow-hidden">
+    <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 sm:gap-6 lg:gap-8 max-w-6xl mx-auto overflow-hidden">
       {displayedImages.map((photo, index) => (
         <motion.div
           key={`${photo.id}-${index}`}
@@ -54,7 +54,7 @@ const PhotoGrid: React.FC<PhotoGridProps> = ({ customerId }) => {
             />
           </AnimatePresence>
           <div className="absolute inset-0 bg-black bg-opacity-50 opacity-0 hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-            <p className="text-sm text-white text-center px-2">
+            <p className="text-sm sm:text-base lg:text-lg text-white text-center px-2">
               Image by {photo.photographer}
             </p>
           </div>
