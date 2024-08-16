@@ -1,46 +1,131 @@
-# Getting Started with Create React App
+# Customer Portal
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project is a React-based customer dashboard application that displays customer information and a photo grid for each customer.
 
-## Available Scripts
+Working Demo - https://cube-assignment-fawn.vercel.app/
 
-In the project directory, you can run:
+## Prerequisites
 
-### `npm start`
+Before you begin, ensure you have met the following requirements:
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+* You have installed Node.js (version 14.0 or later) and npm (which comes with Node.js).
+* You have a Windows/Linux/Mac machine.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## Installing Customer Portal
 
-### `npm test`
+To install the Customer Portal, follow these steps:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+1. Clone the repository:
+   ```
+   git clone https://github.com/chetansirohi/cube_assignment.git
+   ```
+2. Navigate to the project directory:
+   ```
+   cd cube_assignment
+   ```
+3. Install the dependencies:
+   ```
+   npm install
+   ```
 
-### `npm run build`
+## Configuring the Environment
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+1. Create a `.env` file in the root directory of the project if it doesn't already exist.
+2. Add the following environment variables to the `.env` file:
+   ```
+   REACT_APP_PEXELS_API_KEY=your_pexels_api_key_here
+   ```
+   Replace `your_pexels_api_key_here` with your actual Pexels API key.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Running Customer Portal
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+To run Customer Portal, follow these steps:
 
-### `npm run eject`
+1. Start the development server:
+   ```
+   npm start
+   ```
+2. Open your web browser and navigate to `http://localhost:3000`
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+The application should now be running and accessible in your web browser.
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Project Structure
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+The main components of the project are organized as follows:
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+```
+customer-portal/
+│
+├── public/
+│   ├── cubeimage.png
+│   ├── index.html
+│   └── ...
+│
+├── src/
+│   ├── components/
+│   │   ├── ui/
+│   │   ├── CustomerCard.tsx
+│   │   ├── CustomerDetails.tsx
+│   │   ├── CustomerList.tsx
+│   │   ├── Layout.tsx
+│   │   ├── Photogrid.tsx
+│   │   ├── ThemeProvider.tsx
+│   │   └── ThemeToggle.tsx
+│   │
+│   ├── hooks/
+│   │   ├── useCustomers.ts
+│   │   ├── usePexelsImages.ts
+│   │   ├── usePhotos.ts
+│   │   └── useRandomUsers.ts
+│   │
+│   ├── lib/
+│   │   └── utils.ts
+│   │
+│   ├── styles/
+│   │   └── globals.css
+│   │
+│   ├── types/
+│   │   └── index.ts
+│   │
+│   ├── App.tsx
+│   └── index.tsx
+│
+├── .env
+├── .gitignore
+├── package.json
+├── postcss.config.js
+├── tailwind.config.js
+└── tsconfig.json
+```
 
-## Learn More
+## Building for Production
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+To create a production build, run:
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+```
+npm run build
+```
+
+This will create a `build` directory with a production build of your app.
+
+## Additional Information
+
+- This project uses React 18 and TypeScript.
+- Styling is done using Tailwind CSS.
+- The photo grid uses images from the Pexels API.
+- Customer data is fetched using custom hooks (see `src/hooks/`).
+
+## Troubleshooting
+
+If you encounter any issues:
+
+1. Make sure all dependencies are installed correctly (`npm install`).
+2. Ensure you have set up the `.env` file with the correct Pexels API key.
+3. Check the console in your web browser for any error messages.
+
+If problems persist, please open an issue on the GitHub repository.
+
+
+## License
+
+This project uses the following license: [MIT License](https://opensource.org/licenses/MIT).
