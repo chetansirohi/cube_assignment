@@ -4,7 +4,7 @@ This project is a React-based customer dashboard application that displays custo
 
 Working Demo - https://cube-assignment-fawn.vercel.app/
 
-NOTE- For further steps please communicate strictly via e-mail, Thanks :)
+**NOTE- For further steps please communicate strictly via e-mail, Thanks :)**
 
 ## Prerequisites
 
